@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body { background: cadetblue; }
+    #app { text-align: center; vertical-align: middle; }
+    section { height: 100vh; }
+  </style>
+</head>
+<body>
+<div id="app">
+  <section>
+    <h1>MPTI에 오신걸 환영합니다</h1>
+    <p>
+      텔미트렌의 다양한 처방 케이스에 대해
+      좀더 나은 제품과 서비스를 만들기 위해
+      선생님들의 많은 참여 부탁드립니다*
+    </p>
+    <a href="" class="go" @click="go(2)">참여하기</a>
+  </section>
+  <section>
+    <p>
+      test 참여 전
+      알고 계신 코드를 입력해 주세요*
+    </p>
+    <label>
+      <s>코드</s>
+      <input type="text" v-model="inputCode" @keyup.enter="codeCheck">
+      <a href="" class="submit" @click="codeCheck">확인</a>
+    </label>
+    <p>-$만약 알고 계신 코드가 없다면 <a href="" @click="go(3)">이동</a> 버튼을 클릭해주세요</p>
+  </section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+
+    data: {
+      code: '1234',
+      inputCode: '',
+    },
+    methods: {
+      go: function(v) {
+
+      },
+      codeCheck: function() {
+        if(this.code === this.inputCode) {
+          alert('확인되었습니다.')
+        } else {
+          alert('유효한 코드 번호가 아닙니다.')
+        }
+        this.codeClear();
+      },
+      codeClear: function() {
+        this.inputCode = '';
+      }
+    }
+  })
+</script>
+</body>
+</html>
