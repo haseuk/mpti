@@ -6,34 +6,169 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
-    body { background: cadetblue; }
+    body { background: cadetblue; margin:0; padding:0; }
     #app { text-align: center; vertical-align: middle; }
-    section { height: 100vh; }
+    section { height: 100vh; padding: 20px; box-sizing: border-box; }
+    h1 { margin: 0; }
+    .card { width:200px; height:300px; line-height: 300px; display: inline-block; margin: 20px;  }
+    .card1 { background: brown; }
+    .card2 { background: beige; }
+    .card3 { background: burlywood; }
+    .card4 { background: blueviolet; }
+    .card p { margin: 0; }
+    label { display: block; }
+    s { text-decoration: none; }
   </style>
 </head>
 <body>
 <div id="app">
-  <section>
-    <h1>MPTI에 오신걸 환영합니다</h1>
-    <p>
-      텔미트렌의 다양한 처방 케이스에 대해
-      좀더 나은 제품과 서비스를 만들기 위해
-      선생님들의 많은 참여 부탁드립니다*
-    </p>
-    <a href="" class="go" @click="go(2)">참여하기</a>
-  </section>
-  <section>
-    <p>
-      test 참여 전
-      알고 계신 코드를 입력해 주세요*
-    </p>
-    <label>
-      <s>코드</s>
-      <input type="text" v-model="inputCode" @keyup.enter="codeCheck">
-      <a href="" class="submit" @click="codeCheck">확인</a>
-    </label>
-    <p>-$만약 알고 계신 코드가 없다면 <a href="" @click="go(3)">이동</a> 버튼을 클릭해주세요</p>
-  </section>
+  <transition name="fade">
+    <section v-if="page === 1">
+      <h1>MPTI에 오신걸 환영합니다</h1>
+      <p>
+        텔미트렌의 다양한 처방 케이스에 대해
+        좀더 나은 제품과 서비스를 만들기 위해
+        선생님들의 많은 참여 부탁드립니다*
+      </p>
+      <a class="go" @click="go(2)">참여하기</a>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section v-if="page === 2">
+      <p>
+        test 참여 전
+        알고 계신 코드를 입력해 주세요*
+      </p>
+      <label>
+        <s>코드</s>
+        <input type="text" v-model="inputCode" @keyup.enter="codeCheck">
+        <a class="submit" @click="codeCheck">확인</a>
+      </label>
+      <p>-$만약 알고 계신 코드가 없다면 <a @click="go(3)">이동</a> 버튼을 클릭해주세요</p>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section v-if="page === 3">
+      <p>테스트 진행을 위해 아래 정보를 입력해 주세요</p>
+      <label>
+        <s>병원명 :</s>
+        <input type="text" v-model="user.hospital">
+      </label>
+      <label>
+        <s>성함 :</s>
+        <input type="text" v-model="user.name">
+      </label>
+      <a class="go" @click="go(4)">다음</a>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section v-if="page === 4">
+      {{ user.hospital }} 병원(의원) {{ user.name }}선생님 안녕하세요!<br> 테스트를 시작하겠습니다.
+      <a class="go" @click="go(5)">시작</a>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section v-if="page === 5">
+      <div class="card card1" @click="cardSelect(6)">
+        <p>4월</p>
+      </div>
+      <div class="card card2" @click="cardSelect(7)">
+        <p>5월</p>
+      </div>
+      <div class="card card3" @click="cardSelect(8)">
+        <p>6월</p>
+      </div>
+      <div class="card card4" @click="cardSelect(9)">
+        <p>7월</p>
+      </div>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section v-if="page === 6">
+      <h2>Part 1. 고혈압 환자 관리 행동 양식 조사 (1)</h2>
+      <div>
+        <p>생전 처음으로 고혈압을 진단받은 다음과 같은 환자의 혈압 관리를 위해 선생 님께서는 가장 먼저 어떤 방식을 선택하시겠습니까?</p>
+        <img src="img/img1.png" alt="">
+        <label>
+          <input type="radio" value="a" v-model="q1">
+          <i></i>
+          <s>1.즉시 혈압강하제 처방을 고려한다.</s>
+        </label>
+        <label>
+          <input type="radio" value="b" v-model="q1">
+          <i></i>
+          <s>2.식이 및 운동요법 등 생활습관개선을 우선 권고한다.</s>
+        </label>
+      </div>
+      <a class="go" @click="formCheck">다음</a>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section v-if="page === 7">
+      <h2>Part 1. 고혈압 환자 관리 행동 양식 조사 (2)</h2>
+      <div>
+        <p>즉시 혈압강하제 처방을 고려하시게 된 이유는 무엇입니까? (복수 선택 가능)</p>
+        <label>
+          <input type="checkbox" value="a" v-model="q1_1">
+          <i></i>
+          <s>1.신속한 혈압 조절이 필요해서</s>
+        </label>
+        <label>
+          <input type="checkbox" value="b" v-model="q1_1">
+          <i></i>
+          <s>2.연령이나 비만도가 경계선에 있는 환자이므로</s>
+        </label>
+        <label>
+          <input type="checkbox" value="c" v-model="q1_1">
+          <i></i>
+          <s>3.직업 상 규칙적인 생활습관개선이 여의치 않아서</s>
+        </label>
+        <label>
+          <input type="checkbox" value="d" v-model="q1_1">
+          <i></i>
+          <s>4.기타</s>
+        </label>
+      </div>
+      <a class="go" @click="formCheck">다음</a>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section v-if="page === 8">
+      <h2>Part 1. 고혈압 환자 관리 행동 양식 조사 (2)</h2>
+      <div>
+        <p>생활습관개선을 우선 권고하시게 된 이유는 무엇입니까? (복수 선택 가능)</p>
+        <label>
+          <input type="checkbox" value="a" v-model="q1_2">
+          <i></i>
+          <s>1.생활습관개선으로 혈압 관리가 가능하다고 판단해서</s>
+        </label>
+        <label>
+          <input type="checkbox" value="b" v-model="q1_2">
+          <i></i>
+          <s>2.환자가 혈압강하제 복용을 꺼려해서</s>
+        </label>
+        <label>
+          <input type="checkbox" value="c" v-model="q1_2">
+          <i></i>
+          <s>3.환자가 복용하기 간편한 혈압강하제가 마땅치 않아서</s>
+        </label>
+        <label>
+          <input type="checkbox" value="d" v-model="q1_2">
+          <i></i>
+          <s>4.기타</s>
+        </label>
+      </div>
+      <a class="go" @click="formCheck">다음</a>
+    </section>
+  </transition>
+
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
@@ -43,12 +178,32 @@
     data: {
       code: '1234',
       inputCode: '',
+      page: 4,
+      dbData: {
+        hospital: '을지',
+        name: '정우성'
+      },
+      user: {
+        hospital: '',
+        name: ''
+      },
+      q1: [],
+      q1_1: [],
+      q1_2: []
     },
     methods: {
-      go: function(v) {
-
+      go: function(to) {
+        if(to === 4) {
+          this.textChanger();
+        }
+        this.page = to;
+        event.preventDefault();
       },
       codeCheck: function() {
+        if(this.inputCode === '') {
+          alert('코드를 입력하세요.')
+          return
+        }
         if(this.code === this.inputCode) {
           alert('확인되었습니다.')
         } else {
@@ -58,8 +213,25 @@
       },
       codeClear: function() {
         this.inputCode = '';
+      },
+      textChanger: function() {
+        this.user.hospital = this.user.hospital.replace('병원','');
+      },
+      cardSelect: function(v) {
+        this.go(v);
+      },
+      formCheck: function() {
+        if(!this.q1 && !this.q2 && !this.q3) {
+          alert('질문에 답해주세요.')
+          return false
+        }
+        if(this.q1 === 'a') {
+          this.go(7);
+        } else {
+          this.go(8);
+        }
       }
-    }
+    },
   })
 </script>
 </body>
