@@ -105,7 +105,7 @@
           <s>2.식이 및 운동요법 등 생활습관개선을 우선 권고한다.</s>
         </label>
       </div>
-      <a class="go" @click="formCheck">다음</a>
+      <a class="go" @click="formCheck('q1')">다음</a>
     </section>
   </transition>
 
@@ -135,7 +135,7 @@
           <s>4.기타</s>
         </label>
       </div>
-      <a class="go" @click="formCheck">다음</a>
+      <a class="go" @click="formCheck('q1_1')">다음</a>
     </section>
   </transition>
 
@@ -165,20 +165,85 @@
           <s>4.기타</s>
         </label>
       </div>
-      <a class="go" @click="formCheck">다음</a>
+      <a class="go" @click="formCheck('q1_2')">다음</a>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section v-if="page === 9">
+      <h2>Part 2. 텔미트렌 20mg 처방 경험 조사 (1)</h2>
+      <div>
+        <p>선생님께서는 텔미트렌 20mg을 처방해보신 경험이 있으신지요?</p>
+        <label>
+          <input type="radio" value="a" v-model="q2">
+          <i></i>
+          <s>1.있다</s>
+        </label>
+        <label>
+          <input type="radio" value="b" v-model="q2">
+          <i></i>
+          <s>2.없다</s>
+        </label>
+      </div>
+      <a class="go" @click="formCheck('q2')">다음</a>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section v-if="page === 10">
+      <h2>Part 2. 텔미트렌 20mg 처방 경험 조사 (1)</h2>
+      <div>
+        <p>1. 텔미트렌 20mg은 어떤 환자에게 처방하셨습니까? (복수 선택 가능)</p>
+        <label>
+          <input type="checkbox" value="a" v-model="q2_1">
+          <i></i>
+          <s>1.처음 고혈압으로 진단된 환자에게 단독 처방</s>
+        </label>
+        <label>
+          <input type="checkbox" value="b" v-model="q2_1">
+          <i></i>
+          <s>2.처음 고혈압으로 진단된 환자에게 다른 계열 혈압강하제와 병용 처방</s>
+        </label>
+        <label>
+          <input type="checkbox" value="c" v-model="q2_1">
+          <i></i>
+          <s>3.기존ARB(텔미살탄제제포함)를 처방받고 있던 환자에게 교체처방</s>
+        </label>
+        <label>
+          <input type="checkbox" value="d" v-model="q2_1">
+          <i></i>
+          <s>4.기존 다른 계열 혈압강하제를 처방받고 있던 환자에게 교체 처방</s>
+        </label>
+        <label>
+          <input type="checkbox" value="e" v-model="q2_1">
+          <i></i>
+          <s>5.동반질환 (당뇨병, 고지혈증 등) 이 있는 고혈압 환자에게 단독 처방</s>
+        </label>
+        <label>
+          <input type="checkbox" value="f" v-model="q2_1">
+          <i></i>
+          <s>6.동반질환 (당뇨병, 고지혈증 등) 이 있는 고혈압 환자에게 병용 처방</s>
+        </label>
+        <label>
+          <input type="checkbox" value="g" v-model="q2_1">
+          <i></i>
+          <s>7.기타</s>
+        </label>
+      </div>
+      <a class="go" @click="formCheck('q2')">다음</a>
     </section>
   </transition>
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
-  new Vue({
+  var vm = new Vue({
     el: '#app',
 
     data: {
       code: '1234',
       inputCode: '',
-      page: 4,
+      page: 5,
       dbData: {
         hospital: '을지',
         name: '정우성'
@@ -187,9 +252,10 @@
         hospital: '',
         name: ''
       },
-      q1: [],
+      q1: false,
       q1_1: [],
-      q1_2: []
+      q1_2: [],
+      q2: false
     },
     methods: {
       go: function(to) {
@@ -220,8 +286,8 @@
       cardSelect: function(v) {
         this.go(v);
       },
-      formCheck: function() {
-        if(!this.q1 && !this.q2 && !this.q3) {
+      formCheck: function(v) {
+        if(!this[v]) {
           alert('질문에 답해주세요.')
           return false
         }
@@ -229,6 +295,28 @@
           this.go(7);
         } else {
           this.go(8);
+        }
+        if(v === 'q1_1' || v === 'q1_2') {
+          this.check();
+        }
+        if(!this.q2) {
+          return false
+        } else if (this.q2 === 'a') {
+          this.go(10);
+        } else {
+          this.go(11);
+        }
+      },
+      check: function() {
+        if(this.q1_1.length === 0 && this.q1_2.length === 0) {
+          this.msg();
+        } else {
+          this.go(9);
+        }
+      },
+      msg: function(v) {
+        if(!this[v]) {
+          alert('질문에 답해주세요.')
         }
       }
     },
