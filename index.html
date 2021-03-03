@@ -115,27 +115,27 @@
       <div>
         <p>즉시 혈압강하제 처방을 고려하시게 된 이유는 무엇입니까? (복수 선택 가능)</p>
         <label>
-          <input type="checkbox" value="a" v-model="q1_1">
+          <input type="checkbox" value="a" v-model="q1a">
           <i></i>
           <s>1.신속한 혈압 조절이 필요해서</s>
         </label>
         <label>
-          <input type="checkbox" value="b" v-model="q1_1">
+          <input type="checkbox" value="b" v-model="q1a">
           <i></i>
           <s>2.연령이나 비만도가 경계선에 있는 환자이므로</s>
         </label>
         <label>
-          <input type="checkbox" value="c" v-model="q1_1">
+          <input type="checkbox" value="c" v-model="q1a">
           <i></i>
           <s>3.직업 상 규칙적인 생활습관개선이 여의치 않아서</s>
         </label>
         <label>
-          <input type="checkbox" value="d" v-model="q1_1">
+          <input type="checkbox" value="d" v-model="q1a">
           <i></i>
           <s>4.기타</s>
         </label>
       </div>
-      <a class="go" @click="formCheck('q1_1')">다음</a>
+      <a class="go" @click="formCheck('q1a')">다음</a>
     </section>
   </transition>
 
@@ -145,27 +145,27 @@
       <div>
         <p>생활습관개선을 우선 권고하시게 된 이유는 무엇입니까? (복수 선택 가능)</p>
         <label>
-          <input type="checkbox" value="a" v-model="q1_2">
+          <input type="checkbox" value="a" v-model="q1b">
           <i></i>
           <s>1.생활습관개선으로 혈압 관리가 가능하다고 판단해서</s>
         </label>
         <label>
-          <input type="checkbox" value="b" v-model="q1_2">
+          <input type="checkbox" value="b" v-model="q1b">
           <i></i>
           <s>2.환자가 혈압강하제 복용을 꺼려해서</s>
         </label>
         <label>
-          <input type="checkbox" value="c" v-model="q1_2">
+          <input type="checkbox" value="c" v-model="q1b">
           <i></i>
           <s>3.환자가 복용하기 간편한 혈압강하제가 마땅치 않아서</s>
         </label>
         <label>
-          <input type="checkbox" value="d" v-model="q1_2">
+          <input type="checkbox" value="d" v-model="q1b">
           <i></i>
           <s>4.기타</s>
         </label>
       </div>
-      <a class="go" @click="formCheck('q1_2')">다음</a>
+      <a class="go" @click="formCheck('q1b')">다음</a>
     </section>
   </transition>
 
@@ -195,42 +195,274 @@
       <div>
         <p>1. 텔미트렌 20mg은 어떤 환자에게 처방하셨습니까? (복수 선택 가능)</p>
         <label>
-          <input type="checkbox" value="a" v-model="q2_1">
+          <input type="checkbox" value="a" v-model="q2a_1">
           <i></i>
           <s>1.처음 고혈압으로 진단된 환자에게 단독 처방</s>
         </label>
         <label>
-          <input type="checkbox" value="b" v-model="q2_1">
+          <input type="checkbox" value="b" v-model="q2a_1">
           <i></i>
           <s>2.처음 고혈압으로 진단된 환자에게 다른 계열 혈압강하제와 병용 처방</s>
         </label>
         <label>
-          <input type="checkbox" value="c" v-model="q2_1">
+          <input type="checkbox" value="c" v-model="q2a_1">
           <i></i>
           <s>3.기존ARB(텔미살탄제제포함)를 처방받고 있던 환자에게 교체처방</s>
         </label>
         <label>
-          <input type="checkbox" value="d" v-model="q2_1">
+          <input type="checkbox" value="d" v-model="q2a_1">
           <i></i>
           <s>4.기존 다른 계열 혈압강하제를 처방받고 있던 환자에게 교체 처방</s>
         </label>
         <label>
-          <input type="checkbox" value="e" v-model="q2_1">
+          <input type="checkbox" value="e" v-model="q2a_1">
           <i></i>
           <s>5.동반질환 (당뇨병, 고지혈증 등) 이 있는 고혈압 환자에게 단독 처방</s>
         </label>
         <label>
-          <input type="checkbox" value="f" v-model="q2_1">
+          <input type="checkbox" value="f" v-model="q2a_1">
           <i></i>
           <s>6.동반질환 (당뇨병, 고지혈증 등) 이 있는 고혈압 환자에게 병용 처방</s>
         </label>
         <label>
-          <input type="checkbox" value="g" v-model="q2_1">
+          <input type="checkbox" value="g" v-model="q2a_1">
           <i></i>
           <s>7.기타</s>
         </label>
       </div>
-      <a class="go" @click="formCheck('q2')">다음</a>
+      <a class="go" @click="formCheck('q2a_1')">다음</a>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section v-if="page === 11">
+      <h2>Part 2. 텔미트렌 20mg 처방 경험 조사 (2)</h2>
+      <div>
+        <p>1-1. 텔미트렌 20mg은 어떤 ARB 제제를 대신하여 처방하셨습니까? (복수 선택 가능)</p>
+        <label>
+          <input type="checkbox" value="a" v-model="q2a_1c">
+          <i></i>
+          <s>1.로사르탄 (losartan; 코자 등) 제제</s>
+        </label>
+        <label>
+          <input type="checkbox" value="b" v-model="q2a_1c">
+          <i></i>
+          <s>2.칸데사르탄 (candesartan; 아타칸 등) 제제</s>
+        </label>
+        <label>
+          <input type="checkbox" value="c" v-model="q2a_1c">
+          <i></i>
+          <s>3.이르베사르탄 (irbesartan; 아프로벨 등) 제제</s>
+        </label>
+        <label>
+          <input type="checkbox" value="d" v-model="q2a_1c">
+          <i></i>
+          <s>4.텔미사르탄 (telmesartan; 미카르디스 등) 제제 (40mg, 80mg)</s>
+        </label>
+        <label>
+          <input type="checkbox" value="e" v-model="q2a_1c">
+          <i></i>
+          <s>5.올메사르탄 (olmesartan; 올메텍 등) 제제</s>
+        </label>
+        <label>
+          <input type="checkbox" value="f" v-model="q2a_1c">
+          <i></i>
+          <s>6.발사르탄 (valsartan; 디오반 등) 제제</s>
+        </label>
+        <label>
+          <input type="checkbox" value="g" v-model="q2a_1c">
+          <i></i>
+          <s>7.에프로사르탄 (eprosartan; 테베텐 등) 제제</s>
+        </label>
+        <label>
+          <input type="checkbox" value="g" v-model="q2a_1c">
+          <i></i>
+          <s>8.피마사르탄 (fimasartan; 카나브 등) 제제</s>
+        </label>
+        <label>
+          <input type="checkbox" value="g" v-model="q2a_1c">
+          <i></i>
+          <s>9.아질사르탄 (azilsartan; 이달비) 제제</s>
+        </label>
+      </div>
+      <a class="go" @click="formCheck('q2a_1c')">다음</a>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section v-if="page === 12">
+      <h2>Part 2. 텔미트렌 20mg 처방 경험 조사 (3)</h2>
+      <div>
+        <p>2. 텔미트렌 20mg의 혈압 강하 효과에 대해 어떻게 생각하십니까?</p>
+        <label>
+          <input type="radio" value="a" v-model="q2a_2">
+          <i></i>
+          <s>1.매우 충분하다</s>
+        </label>
+        <label>
+          <input type="radio" value="b" v-model="q2a_2">
+          <i></i>
+          <s>2.충분하다</s>
+        </label>
+        <label>
+          <input type="radio" value="c" v-model="q2a_2">
+          <i></i>
+          <s>3.보통이다</s>
+        </label>
+        <label>
+          <input type="radio" value="d" v-model="q2a_2">
+          <i></i>
+          <s>4.부족하다</s>
+        </label>
+        <label>
+          <input type="radio" value="e" v-model="q2a_2">
+          <i></i>
+          <s>5.매우 부족하다</s>
+        </label>
+      </div>
+      <a class="go" @click="formCheck('q2a_2')">다음</a>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section v-if="page === 13">
+      <h2>Part 2. 텔미트렌 20mg 처방 경험 조사 (3)</h2>
+      <div>
+        <p>2-1. 텔미트렌 20mg의 혈압 강하 효과가 부족했을 때 어떻게 대응하셨습니까? (복수 선택 가능)</p>
+        <label>
+          <input type="radio" value="a" v-model="q2a_2d">
+          <i></i>
+          <s>1.텔미트렌 용량 증가 (텔미트렌 40mg, 80mg 제형으로 변경)</s>
+        </label>
+        <label>
+          <input type="radio" value="b" v-model="q2a_2d">
+          <i></i>
+          <s>2.텔미트렌 20mg에 타 계열 혈압강하제 병용 투여</s>
+        </label>
+        <label>
+          <input type="radio" value="c" v-model="q2a_2d">
+          <i></i>
+          <s>3.텔미트렌 20mg 대신 타사 텔미사르탄 단일제제 처방</s>
+        </label>
+        <label>
+          <input type="radio" value="d" v-model="q2a_2d">
+          <i></i>
+          <s>4.텔미트렌 20mg 대신 텔미사르탄 성분이 포함된 복합제 처방</s>
+        </label>
+        <label>
+          <input type="radio" value="e" v-model="q2a_2d">
+          <i></i>
+          <s>5.텔미트렌 20mg 대신 다른 ARB 단일제제 처방</s>
+        </label>
+        <label>
+          <input type="radio" value="e" v-model="q2a_2d">
+          <i></i>
+          <s>6.텔미트렌 20mg 대신 다른 ARB 성분이 포함된 복합제 처방</s>
+        </label>
+        <label>
+          <input type="radio" value="e" v-model="q2a_2d">
+          <i></i>
+          <s>7.텔미트렌 20mg 대신 타 계열 혈압강하제 단일제제 또는 복합제 처방</s>
+        </label>
+      </div>
+      <a class="go" @click="formCheck('q2a_2d')">다음</a>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section v-if="page === 14">
+      <h2>Part 2. 텔미트렌 20mg 처방 경험 조사 (4)</h2>
+      <div>
+        <p>3. 기존 텔미사르탄 제제와 비교하여 텔미트렌 20mg의 장점은 무엇이라고 생각하십니까?</p>
+        <label>
+          <input type="radio" value="a" v-model="q2a_3">
+          <i></i>
+          <s>1.유일한 텔미사르탄 20mg 저용량 제제로 유연한 처방 가능</s>
+        </label>
+        <label>
+          <input type="radio" value="b" v-model="q2a_3">
+          <i></i>
+          <s>2.비교적 작은 알약 사이즈</s>
+        </label>
+        <label>
+          <input type="radio" value="c" v-model="q2a_3">
+          <i></i>
+          <s>3.텔미트렌 브랜드명으로 20mg, 40mg, 80mg 전 라인업 보유하여 용량
+            변경 시 처방전 상의 브랜드명 및 회사명이 유지됨</s>
+        </label>
+        <label>
+          <input type="radio" value="d" v-model="q2a_3">
+          <i></i>
+          <s>4.신뢰할수있는회사제품</s>
+        </label>
+        <label>
+          <input type="radio" value="e" v-model="q2a_3">
+          <i></i>
+          <s>5.기타</s>
+        </label>
+      </div>
+      <a class="go" @click="formCheck('q2a_3')">다음</a>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section v-if="page === 15">
+      <h2>Part 2. 텔미트렌 20mg 처방 경험 조사 (5)</h2>
+      <div>
+        <p>1. 텔미트렌 20mg을 처방해 본 경험이 없으신 이유는 무엇입니까? (복수 선택 가능)</p>
+        <label>
+          <input type="checkbox" value="a" v-model="q2b_1">
+          <i></i>
+          <s>1.텔미트렌 20mg에 대해 들어본 적이 없어서</s>
+        </label>
+        <label>
+          <input type="checkbox" value="b" v-model="q2b_1">
+          <i></i>
+          <s>2.20mg과 같은 저용량 제제 처방의 필요성을 못 느껴서</s>
+        </label>
+        <label>
+          <input type="checkbox" value="c" v-model="q2b_1">
+          <i></i>
+          <s>3.텔미트렌 브랜드명으로 20mg, 40mg, 80mg 전 라인업 보유하여 용량
+            변경 시 처방전 상의 브랜드명 및 회사명이 유지됨</s>
+        </label>
+        <label>
+          <input type="checkbox" value="d" v-model="q2b_1">
+          <i></i>
+          <s>4.신뢰할수있는회사제품</s>
+        </label>
+        <label>
+          <input type="checkbox" value="e" v-model="q2b_1">
+          <i></i>
+          <s>5.기타</s>
+        </label>
+      </div>
+      <a class="go" @click="formCheck('q2b_1')">다음</a>
+    </section>
+  </transition>
+
+  <transition name="fade">
+    <section v-if="page === 16">
+      <h2>Part 2. 텔미트렌 20mg 처방 경험 조사 (5)</h2>
+      <div>
+        <p>2. 향후 텔미트렌 20mg을 처방해보실 의향이 있으신지요?</p>
+        <label>
+          <input type="radio" value="a" v-model="q2b_2">
+          <i></i>
+          <s>1.있다</s>
+        </label>
+        <label>
+          <input type="radio" value="b" v-model="q2b_2">
+          <i></i>
+          <s>2.없다</s>
+        </label>
+        <label>
+          <input type="radio" value="c" v-model="q2b_2">
+          <i></i>
+          <s>3.잘 모르겠다</s>
+        </label>
+      </div>
+      <a class="go" @click="alert('참여해 주셔서 감사합니다.')">마침</a>
     </section>
   </transition>
 
@@ -243,7 +475,7 @@
     data: {
       code: '1234',
       inputCode: '',
-      page: 5,
+      page: 4,
       dbData: {
         hospital: '을지',
         name: '정우성'
@@ -253,13 +485,24 @@
         name: ''
       },
       q1: false,
-      q1_1: [],
-      q1_2: [],
-      q2: false
+      q1a: [],
+      q1b: [],
+      q2: false,
+      q2a_1: [],
+      q2a_2: false,
+      q2a_3: false,
+      q2a_1c: [],
+      q2a_2d: false,
+      q2b_1: [],
+      q2b_2: false,
     },
     methods: {
       go: function(to) {
         if(to === 4) {
+          if(!this.user.hospital && !this.user.name) {
+            alert('병원명과 성함을 작성해 주세요.')
+            return false;
+          }
           this.textChanger();
         }
         this.page = to;
@@ -291,32 +534,48 @@
           alert('질문에 답해주세요.')
           return false
         }
-        if(this.q1 === 'a') {
-          this.go(7);
-        } else {
-          this.go(8);
+        if(v === 'q1a' || v === 'q1b' || v === 'q2b_1') {
+          this.check(v);
         }
-        if(v === 'q1_1' || v === 'q1_2') {
-          this.check();
-        }
-        if(!this.q2) {
+        if(!this[v]) {
+          this.msg();
           return false
+        }
+        if (this.q1 === 'a') {
+          this.go(7);
+        } else if (this.q1 === 'b') {
+          this.go(8);
         } else if (this.q2 === 'a') {
           this.go(10);
-        } else {
+        } else if (this.q2 === 'b') {
+          this.go(15);
+        } else if (this.q2a_1 === 'c') {
           this.go(11);
+        } else if(this.q2a_1c) {
+          this.go(12);
+        } else if (this.q2a_2 === 'd' || this.q2a_2 === 'e') {
+          this.go(13);
+        } else if(this.q2a_2d) {
+          this.go(14);
+        } else if(this.q2b_1) {
+          this.go(16);
         }
       },
-      check: function() {
-        if(this.q1_1.length === 0 && this.q1_2.length === 0) {
+      check: function(v) {
+        if(this[v].length === 0) {
+          console.log(this[v])
           this.msg();
-        } else {
+          return false
+        } else if (v === 'q2b_1') {
+          this.go(15);
+        } else if (v === 'q1a') {
           this.go(9);
         }
       },
       msg: function(v) {
         if(!this[v]) {
           alert('질문에 답해주세요.')
+          return false;
         }
       }
     },
