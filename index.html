@@ -8,7 +8,8 @@
   <style>
     body { background: cadetblue; margin:0; padding:0; }
     #app { text-align: center; vertical-align: middle; }
-    section { height: 100vh; padding: 20px; box-sizing: border-box; }
+    section { height: 100vh; padding: 20px; box-sizing: border-box; position: relative; }
+    section h1, div { z-index: 1; position: relative; }
     h1 { margin: 0; }
     .card { width:200px; height:300px; line-height: 300px; display: inline-block; margin: 20px;  }
     .card1 { background: brown; }
@@ -18,6 +19,8 @@
     .card p { margin: 0; }
     label { display: block; }
     s { text-decoration: none; }
+    .img { display: block; height: 100%; background-image: url("img/img.png"); background-size: cover; background-position: right 100% top 100%; transition: 3s; }
+
   </style>
 </head>
 <body>
@@ -90,6 +93,8 @@
 
   <transition name="fade">
     <section v-if="page === 6">
+      <div class="img" ref="imgBg" :class="{}"></div>
+<!--      <img ref="bg" src="img/img.png" alt="" class="bg" id="bg">-->
       <h2>Part 1. 고혈압 환자 관리 행동 양식 조사 (1)</h2>
       <div>
         <p>생전 처음으로 고혈압을 진단받은 다음과 같은 환자의 혈압 관리를 위해 선생 님께서는 가장 먼저 어떤 방식을 선택하시겠습니까?</p>
@@ -275,12 +280,12 @@
           <s>7.에프로사르탄 (eprosartan; 테베텐 등) 제제</s>
         </label>
         <label>
-          <input type="checkbox" value="g" v-model="q2a_1c">
+          <input type="checkbox" value="h" v-model="q2a_1c">
           <i></i>
           <s>8.피마사르탄 (fimasartan; 카나브 등) 제제</s>
         </label>
         <label>
-          <input type="checkbox" value="g" v-model="q2a_1c">
+          <input type="checkbox" value="i" v-model="q2a_1c">
           <i></i>
           <s>9.아질사르탄 (azilsartan; 이달비) 제제</s>
         </label>
@@ -475,7 +480,7 @@
     data: {
       code: '1234',
       inputCode: '',
-      page: 4,
+      page: 5,
       dbData: {
         hospital: '을지',
         name: '정우성'
@@ -495,19 +500,16 @@
       q2a_2d: false,
       q2b_1: [],
       q2b_2: false,
+      imgMove: false,
+    },
+    watch: {
+      page: function() {
+        if(this.page === 6) {
+          this.imgMove();
+        }
+      }
     },
     methods: {
-      go: function(to) {
-        if(to === 4) {
-          if(!this.user.hospital && !this.user.name) {
-            alert('병원명과 성함을 작성해 주세요.')
-            return false;
-          }
-          this.textChanger();
-        }
-        this.page = to;
-        event.preventDefault();
-      },
       codeCheck: function() {
         if(this.inputCode === '') {
           alert('코드를 입력하세요.')
@@ -530,46 +532,68 @@
         this.go(v);
       },
       formCheck: function(v) {
-        if(!this[v]) {
-          alert('질문에 답해주세요.')
-          return false
-        }
         if(v === 'q1a' || v === 'q1b' || v === 'q2b_1') {
           this.check(v);
+          return false;
         }
-        if(!this[v]) {
+        if(!this[v] || this[v].length === 0) {
           this.msg();
-          return false
-        }
-        if (this.q1 === 'a') {
+          return false;
+        } else if (this.q1 === 'a') {
           this.go(7);
+          this.stateA(v);
         } else if (this.q1 === 'b') {
           this.go(8);
+          this.stateA(v);
         } else if (this.q2 === 'a') {
           this.go(10);
+          this.stateA(v);
         } else if (this.q2 === 'b') {
           this.go(15);
-        } else if (this.q2a_1 === 'c') {
-          this.go(11);
-        } else if(this.q2a_1c) {
+          this.stateA(v);
+        } else if (this.q2a_1) {
+          for (let i = 0; i <this.q2a_1.length; i++) {
+            if(this.q2a_1[i] === 'c') {
+              this.go(11);
+            } else {
+              this.go(12);
+            }
+          }
+          this.stateB(v);
+        }
+        if(this.q2a_1c) {
           this.go(12);
-        } else if (this.q2a_2 === 'd' || this.q2a_2 === 'e') {
-          this.go(13);
-        } else if(this.q2a_2d) {
+          this.stateB(v);
+          return false
+        }
+
+        if (this.q2a_2.length !== 0) {
+          for (let i = 0; i < this.q2a_2.length; i++) {
+            if(this.q2a_2[i] === 'd' || this.q2a_2[i] === 'e') {
+              this.go(13);
+            }
+          }
+          this.stateA(v);
+          return false
+        }
+        if(this.q2a_2d) {
           this.go(14);
-        } else if(this.q2b_1) {
+          this.stateA(v);
+          return false
+        }
+        if(this.q2b_1) {
           this.go(16);
+          this.stateB(v);
+          return false
         }
       },
       check: function(v) {
-        if(this[v].length === 0) {
-          console.log(this[v])
-          this.msg();
-          return false
-        } else if (v === 'q2b_1') {
+        if (v === 'q2b_1') {
           this.go(15);
+          this.stateB(v);
         } else if (v === 'q1a') {
           this.go(9);
+          this.stateB(v);
         }
       },
       msg: function(v) {
@@ -577,6 +601,25 @@
           alert('질문에 답해주세요.')
           return false;
         }
+      },
+      userInfo: function() {
+        if(!this.user.hospital && !this.user.name) {
+          alert('병원명과 성함을 작성해 주세요.')
+          return false;
+        }
+        this.textChanger();
+      },
+      go: function(to) {
+        if(to === 4) {
+          this.userInfo();
+        }
+        this.page = to;
+      },
+      stateA: function(v) {
+        this[v] = false;
+      },
+      stateB: function(v) {
+        this[v] = [];
       }
     },
   })
