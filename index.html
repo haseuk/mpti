@@ -19,8 +19,38 @@
     .card p { margin: 0; }
     label { display: block; }
     s { text-decoration: none; }
-    .img { display: block; height: 100%; background-image: url("img/img.png"); background-size: cover; background-position: right 100% top 100%; transition: 3s; }
+    .img { display: block; height: 100%; background-size: cover; background-image: url("img/img.png"); background-position: right 100% top 100%; transition: 3s; transition-delay: 0.5s; }
+    .imgMove { background-position: right 0 top 100%; }
+    .page6 { position:absolute; left: 50%; top: 20px; transform: translateX(-50%); }
+    p, s, a { font-size: 22px; }
+    [mov] { opacity: 0; transition: opacity 1s; }
+    [mov].txt { opacity: 1;}
+    [mov][data-load="1"] { transition-delay: 3s;}
+    [mov][data-load="2"] { transition-delay: 3.5s;}
+    [mov][data-load="3"] { transition-delay: 4s;}
+    [mov][data-load="4"] { transition-delay: 4.5s;}
+    [mov][data-load="5"] { transition-delay: 5s;}
+    [mov][data-load="6"] { transition-delay: 5.5s;}
 
+    .card-reverse { transform: rotate3d(0,1,0,180deg); background-color: gray; transition: all 1.5s; }
+
+    .hand { background-image: url("img/img_1.png"); width: 96px; height: 100px; position: absolute; top: 480px; }
+    .hand.moving { animation-name: moving; animation-duration: 1s; animation-iteration-count: 5; }
+
+    @keyframes moving {
+      from {
+        top: 480px;
+      }
+      to {
+        top: 380px;
+      }
+    }
+    .fade-enter-active, .fade-leave-active {
+      transition: opacity .5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+      opacity: 0;
+    }
   </style>
 </head>
 <body>
@@ -63,7 +93,7 @@
         <s>성함 :</s>
         <input type="text" v-model="user.name">
       </label>
-      <a class="go" @click="go(4)">다음</a>
+      <a class="go" @click="userInfo">다음</a>
     </section>
   </transition>
 
@@ -76,16 +106,17 @@
 
   <transition name="fade">
     <section v-if="page === 5">
-      <div class="card card1" @click="cardSelect(6)">
+      <div class="hand" :class="{moving: handActive}"></div>
+      <div class="card card1" @click="cardSelect(6)" :class="[(cardReverse === 6) ? 'card-reverse' : '']">
         <p>4월</p>
       </div>
-      <div class="card card2" @click="cardSelect(7)">
+      <div class="card card2" @click="cardSelect(7)" :class="[(cardReverse === 7) ? 'card-reverse' : '']">
         <p>5월</p>
       </div>
-      <div class="card card3" @click="cardSelect(8)">
+      <div class="card card3" @click="cardSelect(8)" :class="[(cardReverse === 8) ? 'card-reverse' : '']">
         <p>6월</p>
       </div>
-      <div class="card card4" @click="cardSelect(9)">
+      <div class="card card4" @click="cardSelect(9)" :class="[(cardReverse === 9) ? 'card-reverse' : '']">
         <p>7월</p>
       </div>
     </section>
@@ -93,24 +124,26 @@
 
   <transition name="fade">
     <section v-if="page === 6">
-      <div class="img" ref="imgBg" :class="{}"></div>
+      <div class="img" :class="{imgMove: isActive}"></div>
 <!--      <img ref="bg" src="img/img.png" alt="" class="bg" id="bg">-->
-      <h2>Part 1. 고혈압 환자 관리 행동 양식 조사 (1)</h2>
-      <div>
-        <p>생전 처음으로 고혈압을 진단받은 다음과 같은 환자의 혈압 관리를 위해 선생 님께서는 가장 먼저 어떤 방식을 선택하시겠습니까?</p>
-        <img src="img/img1.png" alt="">
-        <label>
-          <input type="radio" value="a" v-model="q1">
-          <i></i>
-          <s>1.즉시 혈압강하제 처방을 고려한다.</s>
-        </label>
-        <label>
-          <input type="radio" value="b" v-model="q1">
-          <i></i>
-          <s>2.식이 및 운동요법 등 생활습관개선을 우선 권고한다.</s>
-        </label>
+      <div class="page6">
+        <h2 mov data-load="1" :class="{txt: txtActive}">Part 1. 고혈압 환자 관리 행동 양식 조사 (1)</h2>
+        <div>
+          <p mov data-load="2" :class="{txt: txtActive}">생전 처음으로 고혈압을 진단받은 다음과 같은 환자의 혈압 관리를 위해 선생 님께서는 가장 먼저 어떤 방식을 선택하시겠습니까?</p>
+          <img src="img/img1.png" alt="" mov data-load="3" :class="{txt: txtActive}">
+          <label mov data-load="4" :class="{txt: txtActive}">
+            <input type="radio" value="a" v-model="q1">
+            <i></i>
+            <s>1.즉시 혈압강하제 처방을 고려한다.</s>
+          </label>
+          <label mov data-load="5" :class="{txt: txtActive}">
+            <input type="radio" value="b" v-model="q1">
+            <i></i>
+            <s>2.식이 및 운동요법 등 생활습관개선을 우선 권고한다.</s>
+          </label>
+        </div>
+        <a class="go" @click="formCheck('q1')" mov data-load="6" :class="{txt: txtActive}">다음</a>
       </div>
-      <a class="go" @click="formCheck('q1')">다음</a>
     </section>
   </transition>
 
@@ -480,7 +513,7 @@
     data: {
       code: '1234',
       inputCode: '',
-      page: 5,
+      page: 4,
       dbData: {
         hospital: '을지',
         name: '정우성'
@@ -500,16 +533,43 @@
       q2a_2d: false,
       q2b_1: [],
       q2b_2: false,
-      imgMove: false,
+      isActive: false,
+      txtActive: false,
+      cardReverse: '',
+      handActive: false,
     },
     watch: {
       page: function() {
+        if(this.page === 5) {
+          this.handMoving();
+        }
         if(this.page === 6) {
           this.imgMove();
+        } else {
+          this.isActive = false;
         }
       }
     },
     methods: {
+      handMoving: function() {
+        var self = this;
+        setTimeout(function() {
+          self.handActive = !self.handActive;
+        },1000)
+      },
+      txtLoad: function() {
+        var self = this;
+        setTimeout(function() {
+          self.txtActive = !self.txtActive;
+        },300)
+      },
+      imgMove: function() {
+        var self = this;
+        setTimeout(function() {
+          self.isActive = !self.isActive;
+        },300)
+        this.txtLoad();
+      },
       codeCheck: function() {
         if(this.inputCode === '') {
           alert('코드를 입력하세요.')
@@ -529,7 +589,11 @@
         this.user.hospital = this.user.hospital.replace('병원','');
       },
       cardSelect: function(v) {
-        this.go(v);
+        this.cardReverse = v;
+        var self = this;
+        setTimeout(function() {
+          self.go(v);
+        },2000)
       },
       formCheck: function(v) {
         if(v === 'q1a' || v === 'q1b' || v === 'q2b_1') {
@@ -606,13 +670,12 @@
         if(!this.user.hospital && !this.user.name) {
           alert('병원명과 성함을 작성해 주세요.')
           return false;
+        } else {
+          this.go(4);
         }
         this.textChanger();
       },
       go: function(to) {
-        if(to === 4) {
-          this.userInfo();
-        }
         this.page = to;
       },
       stateA: function(v) {
